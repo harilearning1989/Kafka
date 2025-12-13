@@ -1,0 +1,20 @@
+offset
+topic
+partition
+isr
+replicas
+message encryption
+acknowledgement
+sasl security
+retries
+unconsumed messages
+brokers
+group
+leader
+
+sms application
+email application
+
+consumer security
+cypher encryption
+
