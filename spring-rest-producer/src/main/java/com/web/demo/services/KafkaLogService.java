@@ -23,7 +23,7 @@ public class KafkaLogService {
         this.producerFactory = producerFactory;
     }
 
-    public void logRequest(String messageId, String topic, String key, String payload) {
+    public void logRequest(String messageId, String topic, String key, String payload, int keySize, int valueSize) {
         KafkaLog log = new KafkaLog();
         log.setMessageId(messageId);
         log.setTopic(topic);
@@ -31,6 +31,13 @@ public class KafkaLogService {
         log.setPayload(payload);
         log.setStatus("REQUEST_SENT");
         log.setCreatedAt(LocalDateTime.now());
+        if (keySize > 0) {
+            log.setKeySize(keySize);
+        }
+        if (valueSize > 0) {
+            log.setValueSize(valueSize);
+        }
+
         repository.save(log);
     }
 
@@ -74,16 +81,10 @@ public class KafkaLogService {
     }
 
     private PartitionInfo getPartitionInfo(String topic, int partition) {
-        Producer<String, String> producer = null;
-        try {
-            producer = (Producer<String, String>) producerFactory.createProducer();
+        try (Producer<String, String> producer = (Producer<String, String>) producerFactory.createProducer()) {
             java.util.List<PartitionInfo> list = producer.partitionsFor(topic);
             if (list == null) return null;
             return list.stream().filter(p -> p.partition() == partition).findFirst().orElse(null);
-        } finally {
-            if (producer != null) {
-                try { producer.close(); } catch (Exception ignored) {}
-            }
         }
     }
 }

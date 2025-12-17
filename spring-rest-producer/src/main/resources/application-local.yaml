@@ -1,0 +1,20 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+      # Strong delivery guarantees
+      acks: all
+      retries: 5
+
+      properties:
+        linger.ms: 5
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        compression.type: snappy
+
+    properties:
+      security.protocol: PLAINTEXT

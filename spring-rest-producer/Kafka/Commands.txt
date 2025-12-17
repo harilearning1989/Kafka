@@ -1,0 +1,55 @@
+mkdir -p /KafkaData/{zookeeper/data,zookeeper/log,kafka1,kafka2,kafka3}
+docker-compose up -d
+docker-compose down
+http://localhost:8081
+
+
+docker exec -it kafka1 kafka-topics \
+  --create \
+  --topic test-topic \
+  --bootstrap-server kafka1:29092 \
+  --partitions 3 \
+  --replication-factor 3
+
+docker exec -it kafka1 kafka-topics \
+  --describe \
+  --topic test-topic \
+  --bootstrap-server kafka1:29092
+
+docker exec -it kafka1 kafka-console-consumer \
+  --topic test-topic \
+  --from-beginning \
+  --bootstrap-server kafka1:29092
+
+
+
+
+
+docker exec -it kafka1 kafka-topics \
+  --create \
+  --topic test-topic \
+  --bootstrap-server kafka1:9092 \
+  --replication-factor 3 \
+  --partitions 3
+
+docker exec -it kafka1 kafka-topics \
+  --create \
+  --topic orders \
+  --bootstrap-server kafka1:9092 \
+  --partitions 3 \
+  --replication-factor 3
+
+docker exec -it kafka1 kafka-topics \
+  --describe \
+  --topic orders \
+  --bootstrap-server kafka1:9092
+
+Best practices (quick tips)
+
+Partitions ≥ number of consumer instances
+
+Replication factor ≤ number of brokers
+
+Common dev setup: 3–6 partitions
+
+High throughput topics: 12+ partitions

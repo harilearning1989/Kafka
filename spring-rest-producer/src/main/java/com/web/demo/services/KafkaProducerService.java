@@ -6,6 +6,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,7 +27,13 @@ public class KafkaProducerService {
             String json = objectMapper.writeValueAsString(payload);
             String messageId = UUID.randomUUID().toString();
 
-            kafkaLogService.logRequest(messageId, topic, key, json);
+            byte[] keyBytes = key != null ? key.getBytes(StandardCharsets.UTF_8) : null;
+            byte[] valueBytes = json.getBytes(StandardCharsets.UTF_8);
+
+            int keySize = keyBytes != null ? keyBytes.length : 0;
+            int valueSize = valueBytes.length;
+
+            kafkaLogService.logRequest(messageId, topic, key, json, keySize, valueSize);
 
             CompletableFuture<SendResult<String, String>> future =
                     kafkaTemplate.send(topic, key, json);

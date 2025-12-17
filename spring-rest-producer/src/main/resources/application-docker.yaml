@@ -1,0 +1,19 @@
+spring:
+  kafka:
+    bootstrap-servers: kafka1:29092,kafka2:29093,kafka3:29094
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+      acks: all
+      retries: 5
+
+      properties:
+        linger.ms: 5
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        compression.type: snappy
+
+    properties:
+      security.protocol: PLAINTEXT
