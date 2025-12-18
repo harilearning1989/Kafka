@@ -21,8 +21,13 @@ docker exec -it kafka1 kafka-console-consumer \
   --from-beginning \
   --bootstrap-server kafka1:29092
 
-
-
+kafka-topics.sh \
+  --create \
+  --topic my-topic \
+  --bootstrap-server broker1:9092 \
+  --partitions 3 \
+  --replication-factor 3 \
+  --config retention.ms=7200000
 
 
 docker exec -it kafka1 kafka-topics \
