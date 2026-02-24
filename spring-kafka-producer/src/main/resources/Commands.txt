@@ -1,0 +1,23 @@
+creating topic
+docker exec -it kafka kafka-topics \
+  --create \
+  --topic employee-topic \
+  --bootstrap-server localhost:9092 \
+  --partitions 1 \
+  --replication-factor 1
+
+  listing topic
+  docker exec -it kafka kafka-topics \
+    --list \
+    --bootstrap-server localhost:9092
+
+  produce topic
+  docker exec -it kafka kafka-console-producer \
+    --topic product-created-topic \
+    --bootstrap-server localhost:9092
+
+  consume topic
+  docker exec -it kafka kafka-console-consumer \
+    --topic product-created-topic \
+    --bootstrap-server localhost:9092 \
+    --from-beginning
