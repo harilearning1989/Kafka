@@ -13,7 +13,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "com.web.consumer.dtos"
-        spring.json.value.default.type: "com.web.consumer.dtos.Employee"
+        spring.json.value.default.type: "com.web.consumer.dtos.EmployeeDTO"
 
 server:
   port: 8083

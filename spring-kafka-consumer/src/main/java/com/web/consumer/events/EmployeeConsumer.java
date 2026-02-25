@@ -1,6 +1,6 @@
 package com.web.consumer.events;
 
-import com.web.consumer.dtos.Employee;
+import com.web.consumer.dtos.EmployeeDTO;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +11,13 @@ public class EmployeeConsumer {
             topics = "employee-topic",
             groupId = "employee-group"
     )
-    public void consume(Employee employee) {
+    public void consume(EmployeeDTO employee) {
 
         System.out.println("Received Employee:");
-        System.out.println("ID: " + employee.getId());
-        System.out.println("Name: " + employee.getName());
-        System.out.println("Department: " + employee.getDepartment());
-        System.out.println("Salary: " + employee.getSalary());
+        System.out.println("ID: " + employee.id());
+        System.out.println("Name: " + employee.name());
+        System.out.println("Department: " + employee.department());
+        System.out.println("Salary: " + employee.salary());
         System.out.println("----------------------------------");
     }
 
