@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: consumer-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: emp-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
